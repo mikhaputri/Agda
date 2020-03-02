@@ -60,14 +60,23 @@ allInputs (suc n) = let xs : List (Vec Bool n)
 
 -- allinputs 2 = ..
 
+eqb : Bool → Bool → Bool
+eqb false false = true
+eqb false true = false
+eqb true false = false
+eqb true true = true
+
 tester : {n : ℕ} → Circuit n → (Vec Bool n → Bool) → Bool
-tester {n} c f = {!!}
+tester {n} c f = aux (allInputs n)   
+  where aux : List (Vec Bool n) → Bool
+        aux [] = true
+        aux (x ∷ xs) = eqb (eval c x) (f x) ∧ aux xs  
 
 test = tester orc orf
+test2 = tester andc orf
 
 buildCircuit : {n : ℕ} → (Vec Bool n → Bool) → Circuit n
 buildCircuit f = {!!}
-
 
 buildCircuitOk : {n : ℕ} → (f : Vec Bool n → Bool) →
                  (bs : Vec Bool n) → eval (buildCircuit f) bs ≡ f bs 
