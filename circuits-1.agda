@@ -36,12 +36,40 @@ eval (nand p q) bs = nandf (eval p bs) (eval q bs)
 
 x1 = eval notc (false ∷ [])
 x2 = eval andc (true ∷ (true ∷ []))
+x3 = eval orc (false ∷ (false ∷ []))
+
+orf : Vec Bool 2 → Bool
+orf (x ∷ y ∷ []) = x ∨ y
+
+open import Data.List
+
+l1 : List ℕ
+l1 = 1 ∷ 2 ∷ 3 ∷ []
+l2 : List ℕ
+l2 = Data.List.map suc l1
+
+allInputs : (n : ℕ) → List (Vec Bool n)
+allInputs zero = Data.List.[_] [] 
+allInputs (suc n) = let xs : List (Vec Bool n)
+                        xs = allInputs n
+                        fxs : List (Vec Bool (suc n))
+                        fxs = Data.List.map (λ x → false ∷ x) xs
+                        txs : List (Vec Bool (suc n))
+                        txs = Data.List.map (λ x → true ∷ x) xs
+                     in fxs Data.List.++ txs
+
+-- allinputs 2 = ..
+
+tester : {n : ℕ} → Circuit n → (Vec Bool n → Bool) → Bool
+tester {n} c f = {!!}
+
+test = tester orc orf
 
 buildCircuit : {n : ℕ} → (Vec Bool n → Bool) → Circuit n
-buildCircuit f = ?
+buildCircuit f = {!!}
 
 
 buildCircuitOk : {n : ℕ} → (f : Vec Bool n → Bool) →
                  (bs : Vec Bool n) → eval (buildCircuit f) bs ≡ f bs 
-buildCircuitOk f bs = ?
+buildCircuitOk f bs = {!!}
 
