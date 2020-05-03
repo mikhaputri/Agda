@@ -75,6 +75,12 @@ tester {n} c f = aux (allInputs n)
 test = tester orc orf
 test2 = tester andc orf
 
+-- look from allinput & tester, find lines that produce true
+-- e.g x0 x1 x2 -> true false true -> true
+-- then create the function -> x0 & !x1 & x2
+-- combine all functions that made out of each lines into a circuit with OR
+-- e.g x0 & !x1 & x2 , x0 & x1 & x2 , etc.
+
 buildCircuit : {n : ℕ} → (Vec Bool n → Bool) → Circuit n
 buildCircuit f = {!!}
 
